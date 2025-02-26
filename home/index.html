@@ -58,30 +58,26 @@
             document.getElementById("message-input").addEventListener("keypress", function (event) {
                 if (event.key === "Enter") {
                     event.preventDefault();
-                    document.getElementById("send-button").click();
+                    const user = auth.currentUser;
+                    if (!user) return;
+
+                    const now = Date.now();
+                    if (now - lastMessageTime < 1000) {
+                        console.log("You must wait before sending another message.");
+                        return;
+                    }
+
+                    const message = document.getElementById("message-input").value.trim();
+                    if (message) {
+                        writeUserData(message, getFirstName(user.displayName), user.uid);
+                        document.getElementById("message-input").value = "";
+                        lastMessageTime = now;
+                    }
+
+                    setTimeout(() => {
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    }, 100);
                 }
-            });
-
-            document.getElementById("send-button").addEventListener("click", () => {
-                const user = auth.currentUser;
-                if (!user) return;
-
-                const now = Date.now();
-                if (now - lastMessageTime < 1000) {
-                    console.log("You must wait before sending another message.");
-                    return;
-                }
-
-                const message = document.getElementById("message-input").value.trim();
-                if (message) {
-                    writeUserData(message, getFirstName(user.displayName), user.uid);
-                    document.getElementById("message-input").value = "";
-                    lastMessageTime = now;
-                }
-
-                setTimeout(() => {
-                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                }, 100);
             });
 
             const messagesRef = ref(db, "messages/");
@@ -132,10 +128,11 @@
 
 <body>
     <div id="main">
-        <h1>Duckcord</h2>
-            <div id="messages-container"></div>
-            <input type="text" id="message-input" placeholder="Message">
-            <button id="send-button">Post Message</button>
+        <div id="header">
+            <h1>Duckcord</h2>
+        </div>
+        <div id="messages-container"></div>
+        <input type="text" id="message-input" placeholder="Message">
     </div>
 </body>
 

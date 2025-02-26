@@ -2,13 +2,7 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-}
-
-#messages-container {
-    margin: 0;
-    padding: 0;
-    overflow-y: auto;
-    border: 1px solid #ccc;
+    background-color: #35393E;
 }
 
 #main {
@@ -19,12 +13,53 @@ body {
     height: 100vh;
 }
 
+#header {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: left;
+    margin: 0;
+    padding: 20px;
+    background-color: #35393E;
+    width: 100%;
+    position: relative;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#messages-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding-left: 20px;
+    background-color: #35393E;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#message-input {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    font-family: gg-sans-medium, sans-serif;
+    color: #FFFFFF;
+    background-color: #40444B;
+    border: none;
+    border-radius: 16px;
+    outline: none;
+}
+
 h1 {
+    margin: 0;
+    padding: 0;
     font-family: gg-sans-bold, sans-serif;
+    color: #FFFFFF;
 }
 
 p {
+    margin: 0;
+    padding: 0;
     font-family: gg-sans-medium, sans-serif;
+    color: #FFFFFF;
 }
 
 /*.signin {
