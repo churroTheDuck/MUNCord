@@ -19,6 +19,14 @@ body {
     height: 100vh;
 }
 
+h1 {
+    font-family: gg-sans-bold, sans-serif;
+}
+
+p {
+    font-family: gg-sans-medium, sans-serif;
+}
+
 /*.signin {
     max-width: 320px;
     display: flex;
@@ -46,3 +54,6 @@ body {
 .signin:hover {
     transform: scale(1.1);
 }*/
+
+@font-face { font-family: gg-sans-medium; font-weight: medium; src: url("gg-sans/gg\ sans\ Regular.ttf"); }
+@font-face { font-family: gg-sans-bold; font-weight: bold; src: url("gg-sans/gg\ sans\ Bold.ttf"); }
