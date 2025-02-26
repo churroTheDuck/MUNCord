@@ -26,10 +26,12 @@
         const auth = getAuth(app);
 
         function writeUserData(message, name, uid) {
-            set(ref(db, "messages/" + Date.now()), {
+            const timestamp = Date.now();
+            set(ref(db, "messages/" + timestamp), {
                 username: name,
                 uid: uid,
-                message: message
+                message: message,
+                timestamp: timestamp
             }).then(() => {
                 console.log("Message saved.");
             }).catch((error) => {
@@ -74,7 +76,7 @@
                 if (message) {
                     writeUserData(message, getFirstName(user.displayName), user.uid);
                     document.getElementById("message-input").value = "";
-                    lastMessageTime = now; // Update the last message timestamp
+                    lastMessageTime = now;
                 }
 
                 setTimeout(() => {
@@ -90,17 +92,17 @@
 
                 const messages = snapshot.val();
                 if (messages) {
-                    Object.values(messages).forEach(({ username, message }) => {
+                    Object.values(messages).forEach(({ username, message, timestamp }) => {
                         const msg = document.createElement("p");
-                        msg.textContent = `${username}: ${message}`;
+                        const time = new Date(timestamp).toLocaleTimeString();
+                        msg.textContent = `${time} - ${username}: ${message}`;
                         messagesContainer.appendChild(msg);
                     });
                 }
 
                 if (isAtBottom) {
                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                }
-                if (document.hidden) {
+                } else if (document.hidden) {
                     unreadMessages++;
                     updateTitle();
                 }
