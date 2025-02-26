@@ -28,7 +28,7 @@
                 .then((result) => {
                     const user = result.user;
                     if (user.email.endsWith("@nuevaschool.org")) {
-                        window.location.href = "/Duckcord/home/index.html";;
+                        window.location.href = "churrotheduck.github.io/Duckcord/home";;
                     } else {
                         auth.signOut().then(() => {
                             console.log("GET OUT");
@@ -44,7 +44,7 @@
             document.getElementById("sign-in-button").addEventListener("click", googleSignIn);
             onAuthStateChanged(auth, (user) => {
                 if (user && user.email.endsWith("@nuevaschool.org")) {
-                    window.location.href = "/Duckcord/home/index.html";
+                    window.location.href = "churrotheduck.github.io/Duckcord/home";
                 } else if (user) {
                     auth.signOut().then(() => {
                         console.log("GET OUT");
