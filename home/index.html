@@ -44,17 +44,20 @@
 
         onAuthStateChanged(auth, (user) => {
             if (!user) {
-                window.location.href = "../signin"; // Redirect if not logged in
+                window.location.href = "../signin";
             }
         });
 
         document.addEventListener("DOMContentLoaded", () => {
+            const messagesContainer = document.getElementById("messages-container");
+
             document.getElementById("message-input").addEventListener("keypress", function (event) {
                 if (event.key === "Enter") {
                     event.preventDefault();
                     document.getElementById("send-button").click();
                 }
             });
+
             document.getElementById("send-button").addEventListener("click", () => {
                 const user = auth.currentUser;
                 if (!user) return;
@@ -64,12 +67,16 @@
                     writeUserData(message, getFirstName(user.displayName), user.uid);
                     document.getElementById("message-input").value = "";
                 }
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+                setTimeout(() => {
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 100);
             });
 
             const messagesRef = ref(db, "messages/");
             onValue(messagesRef, (snapshot) => {
-                const messagesContainer = document.getElementById("messages-container");
+                const isAtBottom = messagesContainer.scrollTop + messagesContainer.clientHeight >= messagesContainer.scrollHeight - 5;
+
                 messagesContainer.innerHTML = "";
 
                 const messages = snapshot.val();
@@ -79,6 +86,10 @@
                         msg.textContent = `${username}: ${message}`;
                         messagesContainer.appendChild(msg);
                     });
+                }
+
+                if (isAtBottom) {
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
                 }
             });
         });
