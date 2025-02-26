@@ -80,6 +80,26 @@
                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
                 }, 100);
             });
+
+            const messagesRef = ref(db, "messages/");
+            onValue(messagesRef, (snapshot) => {
+                const isAtBottom = messagesContainer.scrollTop + messagesContainer.clientHeight >= messagesContainer.scrollHeight - 5;
+
+                messagesContainer.innerHTML = "";
+
+                const messages = snapshot.val();
+                if (messages) {
+                    Object.values(messages).forEach(({ username, message }) => {
+                        const msg = document.createElement("p");
+                        msg.textContent = `${username}: ${message}`;
+                        messagesContainer.appendChild(msg);
+                    });
+                }
+
+                if (isAtBottom) {
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+            });
         });
     </script>
     <link rel="stylesheet" href="../style.css">
