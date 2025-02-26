@@ -64,8 +64,7 @@
                     writeUserData(message, getFirstName(user.displayName), user.uid);
                     document.getElementById("message-input").value = "";
                 }
-                messagesContainer.scrollTop = messagesContainer.scrollHeight; // Auto-scroll
-                userSentMessage = false; // Reset flag after scrolling
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             });
 
             const messagesRef = ref(db, "messages/");
