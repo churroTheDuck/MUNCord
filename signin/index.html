@@ -22,33 +22,49 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        function googleSignIn() {
-            const provider = new GoogleAuthProvider();
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    const user = result.user;
-                    if (user.email.endsWith("@nuevaschool.org")) {
-                        window.location.href = "../home";;
+        async function hashEmailDomain(email) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(email.split('@')[1]);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const allowedDomainHash = "b7d5b79b0107bb993ff36bd3e4646b0f623b73f526d081429807e3f9e1363a26";
+
+            async function googleSignIn() {
+                const provider = new GoogleAuthProvider();
+                signInWithPopup(auth, provider)
+                    .then(async (result) => {
+                        const user = result.user;
+                        const domainHash = await hashEmailDomain(user.email);
+                        if (domainHash === allowedDomainHash) {
+                            window.location.href = "../home";
+                        } else {
+                            auth.signOut().then(() => {
+                                console.log("GET OUT");
+                            });
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error signing in:", error);
+                    });
+            }
+
+            document.getElementById("sign-in-button").addEventListener("click", googleSignIn);
+
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    const domainHash = await hashEmailDomain(user.email);
+                    if (domainHash === allowedDomainHash) {
+                        window.location.href = "../home";
                     } else {
                         auth.signOut().then(() => {
                             console.log("GET OUT");
                         });
                     }
-                })
-                .catch((error) => {
-                    console.error("Error signing in:", error);
-                });
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById("sign-in-button").addEventListener("click", googleSignIn);
-            onAuthStateChanged(auth, (user) => {
-                if (user && user.email.endsWith("@nuevaschool.org")) {
-                    window.location.href = "../home";
-                } else if (user) {
-                    auth.signOut().then(() => {
-                        console.log("GET OUT");
-                    });
                 }
             });
         });

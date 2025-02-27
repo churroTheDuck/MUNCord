@@ -68,7 +68,7 @@
                     }
 
                     const message = document.getElementById("message-input").value.trim();
-                    if (message) {
+                    if (message && message.length < 300) {
                         writeUserData(message, getFirstName(user.displayName), user.uid);
                         document.getElementById("message-input").value = "";
                         lastMessageTime = now;
