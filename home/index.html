@@ -47,10 +47,37 @@
         onAuthStateChanged(auth, (user) => {
             if (!user) {
                 window.location.href = "../signin";
+            } else {
+                const userRef = ref(db, "onlineUsers/" + user.uid);
+                set(userRef, {
+                    username: getFirstName(user.displayName),
+                    lastActive: Date.now()
+                });
+
+                window.addEventListener("beforeunload", () => {
+                    set(userRef, null);
+                });
             }
         });
 
+
         document.addEventListener("DOMContentLoaded", () => {
+            const onlineUsersContainer = document.createElement("div");
+            onlineUsersContainer.id = "online-users";
+            document.getElementById("main").prepend(onlineUsersContainer);
+
+            const onlineUsersRef = ref(db, "onlineUsers/");
+            onValue(onlineUsersRef, (snapshot) => {
+                onlineUsersContainer.innerHTML = "<strong>Online:</strong> ";
+                const users = snapshot.val();
+                if (users) {
+                    const userList = Object.values(users).map(user => user.username).join(", ");
+                    onlineUsersContainer.innerHTML += userList || "No one online";
+                } else {
+                    onlineUsersContainer.innerHTML += "No one online";
+                }
+            });
+
             const messagesContainer = document.getElementById("messages-container");
             let lastMessageTime = 0; // Track the last message timestamp
             let unreadMessages = 0;
