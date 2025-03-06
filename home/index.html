@@ -62,21 +62,26 @@
 
 
         document.addEventListener("DOMContentLoaded", () => {
-            const onlineUsersContainer = document.createElement("div");
-            onlineUsersContainer.id = "online-users";
-            document.getElementById("main").prepend(onlineUsersContainer);
+            const onlineUsersContainer = document.getElementById("user-container");
 
             const onlineUsersRef = ref(db, "onlineUsers/");
             onValue(onlineUsersRef, (snapshot) => {
-                onlineUsersContainer.innerHTML = "<strong>Online:</strong> ";
                 const users = snapshot.val();
+                onlineUsersContainer.innerHTML = "<b>Online Users</b>";
+
                 if (users) {
-                    const userList = Object.values(users).map(user => user.username).join(", ");
-                    onlineUsersContainer.innerHTML += userList || "No one online";
+                    Object.values(users).forEach(user => {
+                        const userElement = document.createElement("p");
+                        userElement.textContent = user.username;
+                        onlineUsersContainer.appendChild(userElement);
+                    });
                 } else {
-                    onlineUsersContainer.innerHTML += "No one online";
+                    const noUsersElement = document.createElement("p");
+                    noUsersElement.textContent = "No one online";
+                    onlineUsersContainer.appendChild(noUsersElement);
                 }
             });
+
 
             const messagesContainer = document.getElementById("messages-container");
             let lastMessageTime = 0; // Track the last message timestamp
@@ -152,12 +157,15 @@
 </head>
 
 <body>
+    <div id="header">
+        <h1>Duckcord</h1>
+    </div>
     <div id="main">
-        <div id="header">
-            <h1>Duckcord</h2>
+        <div id="content">
+            <div id="messages-container"></div>
+            <input type="text" id="message-input" placeholder="Message">
         </div>
-        <div id="messages-container"></div>
-        <input type="text" id="message-input" placeholder="Message">
+        <div id="user-container"></div>
     </div>
 </body>
 
