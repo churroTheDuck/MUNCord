@@ -24,10 +24,12 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const auth = getAuth(app);
+        
+        var server = "messages/";
 
         function writeUserData(message, name, uid) {
             const timestamp = Date.now();
-            set(ref(db, "messages/" + timestamp), {
+            set(ref(db, server + timestamp), {
                 username: name,
                 uid: uid,
                 message: message,
@@ -112,7 +114,7 @@
                 }
             });
 
-            const messagesRef = ref(db, "messages/");
+            const messagesRef = ref(db, server);
             onValue(messagesRef, (snapshot) => {
                 const isAtBottom = messagesContainer.scrollTop + messagesContainer.clientHeight >= messagesContainer.scrollHeight - 5;
 
@@ -161,6 +163,7 @@
         <h1>Duckcord™ by Lang</h1>
     </div>
     <div id="main">
+        <div id="servers-container"></div>
         <div id="content">
             <div id="messages-container"></div>
             <input type="text" id="message-input" placeholder="Message">
