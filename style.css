@@ -34,15 +34,17 @@ body {
 }
 
 #messages-container {
-    height: calc(100% - 40px);
+    flex-grow: 1;
+    margin: 0;
     background-color: #35393E;
     overflow-x: hidden;
     overflow-y: auto;
 }
 
 #message-input {
-    height: 5svh;
-    padding: 10px;
+    margin-bottom: 20px;
+    padding: 20px;
+    height: 5vh;
     font-family: gg-sans-medium, sans-serif;
     font-size: 18px;
     color: #FFFFFF;
@@ -50,8 +52,6 @@ body {
     border: none;
     border-radius: 16px;
     outline: none;
-    height: 40px;
-    margin: 10px 20px;
 }
 
 #user-container {
