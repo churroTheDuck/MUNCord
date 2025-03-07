@@ -35,7 +35,7 @@ body {
 
 #messages-container {
     margin: 0;
-    height: 90vh;
+    height: 85vh;
     background-color: #35393E;
     overflow-x: hidden;
     overflow-y: auto;
