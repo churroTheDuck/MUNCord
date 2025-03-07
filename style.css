@@ -46,7 +46,10 @@ body {
 }
 
 #user-container {
-    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 10vw;
     background-color: #2F3136;
     color: white;
     padding: 20px;
