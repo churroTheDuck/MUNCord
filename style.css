@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -28,6 +32,7 @@ body {
 #messages-container {
     margin: 20px;
     height: 70vh;
+    width: calc(90vw - 40px);
     background-color: #35393E;
     overflow-x: hidden;
     overflow-y: auto;
@@ -36,6 +41,7 @@ body {
 #message-input {
     margin: 20px;
     padding: 20px;
+    width: calc(90vw - 40px);
     height: 5vh;
     font-family: gg-sans-medium, sans-serif;
     font-size: 18px;
