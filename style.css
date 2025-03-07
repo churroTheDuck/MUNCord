@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    height: calc(75vh + 80px);
     overflow: hidden;
     background-color: #35393E;
 }
@@ -32,9 +33,7 @@ body {
 }
 
 #message-input {
-    margin-bottom: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 20px;
     padding: 20px;
     height: 5vh;
     font-family: gg-sans-medium, sans-serif;
