@@ -34,8 +34,8 @@ body {
 }
 
 #messages-container {
-    flex-grow: 1;
     margin: 0;
+    height: 90vh;
     background-color: #35393E;
     overflow-x: hidden;
     overflow-y: auto;
