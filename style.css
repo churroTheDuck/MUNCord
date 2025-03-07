@@ -9,7 +9,7 @@ body {
     display: flex;
     flex-direction: row;
     width: 100vw;
-    height: calc(100vh - 60px);
+    height: 100vh;
 }
 
 #content {
@@ -37,6 +37,7 @@ body {
     display: flex;
     flex-direction: column;
     margin: 0;
+    height: 97vh;
     background-color: #35393E;
     overflow-x: hidden;
     overflow-y: auto;
@@ -45,6 +46,7 @@ body {
 #message-input {
     margin-bottom: 20px;
     padding: 20px;
+    height: 3vh;
     font-family: gg-sans-medium, sans-serif;
     font-size: 18px;
     color: #FFFFFF;
